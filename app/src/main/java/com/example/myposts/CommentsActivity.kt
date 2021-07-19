@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,7 +21,9 @@ class CommentsActivity : AppCompatActivity() {
 //        where we will set the onclick.
         postId=intent.getIntExtra("POST_ID",0)
 //    getInXtra-0 is wheb the id is not found.
-    }
+    castViews()
+    getPost()
+        }
     fun castViews(){
         tvPostTitle=findViewById(R.id.tvPostTittle)
         tvPostody=findViewById(R.id.tvBody)
@@ -45,4 +49,25 @@ class CommentsActivity : AppCompatActivity() {
             }
         })
 
-}}
+}
+    fun getComments(){
+    var rvComments=findViewById<RecyclerView>(R.id.rvComments)
+    val retrofit=ApiClient.buildAppClient(ApiInterface::class.java)
+    val request=retrofit.getComments(postId)
+     request.enqueue(object :Callback<List<Comments>>{
+         override fun onResponse(call: Call<List<Comments>>, response: Response<List<Comments>>) {
+             if(response.isSuccessful){
+                 var comments=response.body()!!
+                 var commentsAdapter=commentsAdapter(comments)
+                 rvComments.adapter=commentsAdapter
+                 rvComments.layoutManager=LinearLayoutManager(baseContext)
+         }
+     }
+
+         override fun onFailure(call: Call<List<Comments>>, t: Throwable) {
+             Toast.makeText(baseContext,t.message,Toast.LENGTH_LONG).show()
+         }
+
+    })
+    }
+}

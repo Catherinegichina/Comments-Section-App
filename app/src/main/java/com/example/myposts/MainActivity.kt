@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 //        where the call actually takes place.
         request.enqueue(object : Callback, retrofit2.Callback<List<Post>> {
 
-            override fun onResponse(call: Call<List<Post>?>, response: Response<List<Post>>) {
+            override fun onResponse(call: Call<List<Post>?>, response: Response<List<Post>?>) {
               if(response.isSuccessful){
                   var posts=response.body()!!
                   var myAdapter=MyPosts(baseContext,posts)

@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Myposts">
-        <activity android:name=".CommentsActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
+        <activity android:name=".commentsAdapter"></activity>
+        <activity android:name=".comentsAdapter" />
+        <activity
+            android:name=".CommentsActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
